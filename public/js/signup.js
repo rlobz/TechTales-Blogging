@@ -4,6 +4,12 @@ const signupFormHandler = async (event) => {
     const username = document.querySelector('#username-signup').value.trim();
     const password = document.querySelector('#password-signup').value.trim();
 
+    if (password.length < 6) {
+        console.log('Password is too short');
+        alert('Your password is too short. It must be at least 6 characters long.');
+        return;
+    }
+
     if (username && password) {
         const response = await fetch('/api/users', {
             method: 'POST',
@@ -12,9 +18,10 @@ const signupFormHandler = async (event) => {
         });
 
         if (response.ok) {
+            console.log('success');
             document.location.replace('/dashboard');
         } else {
-            alert(response.statusText);
+            alert('Failed to sign up.' + response.statusText);
         }
     }
 };
